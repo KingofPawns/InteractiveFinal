@@ -18,9 +18,21 @@ block content
                     div(class="form-group")
                         label(for="age")="Age"
                         input(type="number", class="form-control", place="Enter your age")
-        div(class="card text-white bg-success mb-3")
+        div(class="card text-white bg-dark mb-3")
             div(class="card-header")="What is your favorite color?"
             div(class="card-body")
                 div(class="btn-group btn-group-toggle", data-toggle="buttons")
+                    label(class="btn btn-primary active")
+                        input(type="radio", name="colors", id="red", value="red", autocomplete="off", checked="")
+                        | Red
                     label(class="btn btn-primary")
-                        input(type='radio' name="colors", id="red")
+                        input(type="radio", name="colors", id="green", value="green" autocomplete="off")
+                        | Green
+                    label(class="btn btn-primary")
+                        input(type="radio", name="colors", id="blue", value="blue", autocomplete="off")
+                        | Blue
+                    label(class="btn btn-primary")
+                        input(type="radio", name="colors", id="yellow", value="yellow", autocomplete="off")
+                        | Yellow
+
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
