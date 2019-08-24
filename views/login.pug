@@ -1,0 +1,15 @@
+extends layout.pug
+
+block content
+    form(action="/login", method="POST")
+        div(class="card text-white bg-primary mb-3")
+            div(class="card-header")="Sign Up"
+            div(class="card-body")
+                fieldset
+                    div(class="form-group")
+                        label(for="username")="Username"
+                        input(type="text", id="username", class="form-control", placeholder="Enter a username")
+                    div(class="form-group")
+                        label(for="password")="Password"
+                        input(type="password", id="password", class="form-control", placeholder="Choose a password")
+                    input(type="submit", class="btn btn-secondary")

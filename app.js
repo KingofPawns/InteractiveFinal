@@ -17,6 +17,14 @@ app.get('/', function(rec, res){
     res.render("index");
 });
 
-app.get('/register', function(rec, res){
+app.get('/register', function(req, res){
     res.render("register");
 });
+
+app.get('/login', function(req, res){
+    res.render("login");
+})
+
+app.post('/login', function(req, res){
+    res.render("index");
+})
