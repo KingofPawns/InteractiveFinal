@@ -1,0 +1,26 @@
+extends layout.pug
+
+block content
+    form(action="/", method="POST")
+        div(class="card text-white bg-primary mb-3")
+            div(class="card-header")="Sign Up"
+            div(class="card-body")
+                fieldset
+                    div(class="form-group")
+                        label(for="username")="Username"
+                        input(type="text", class="form-control", placeholder="Enter a username")
+                    div(class="form-group")
+                        label(for="password")="Password"
+                        input(type="password", class="form-control", placeholder="Choose a password")
+                    div(class="form-group")
+                        label(for="email")="Email"
+                        input(type="email", class="form-control", place="Enter your email")
+                    div(class="form-group")
+                        label(for="age")="Age"
+                        input(type="number", class="form-control", place="Enter your age")
+        div(class="card text-white bg-success mb-3")
+            div(class="card-header")="What is your favorite color?"
+            div(class="card-body")
+                div(class="btn-group btn-group-toggle", data-toggle="buttons")
+                    label(class="btn btn-primary")
+                        input(type='radio' name="colors", id="red")
