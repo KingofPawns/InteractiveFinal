@@ -7,7 +7,7 @@ const port = 3000;
 const app = express();
 const Schema = mongoose.Schema;
 
-mongoose.connect('mongodb+srv://Admin:1234@webfinal-k4s0e.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }).
+var db = mongoose.connect('mongodb+srv://Admin:1234@webfinal-k4s0e.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true }).
   catch(error => console.log(error));
 
 var UserSchema = new Schema({
@@ -45,12 +45,12 @@ app.get('/', function(rec, res){
 
 app.post('/', function(req, res){
     var user= User({
-        Username: req.body,
-        Password: String,
-        IsManager: Boolean,
-        IsActive: Boolean,
-        Email: String,
-        QuestionAnswerId: Number
+        Username: req.body.username,
+        Password: req.body.password,
+        IsManager: false,
+        IsActive: true,
+        Email: req.body.email,
+        QuestionAnswerId: db.Users.find().Count()+1,
       });
   
     res.render("index");
