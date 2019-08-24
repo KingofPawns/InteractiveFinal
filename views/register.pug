@@ -8,16 +8,16 @@ block content
                 fieldset
                     div(class="form-group")
                         label(for="username")="Username"
-                        input(type="text", class="form-control", placeholder="Enter a username")
+                        input(type="text", id="username", class="form-control", placeholder="Enter a username")
                     div(class="form-group")
                         label(for="password")="Password"
-                        input(type="password", class="form-control", placeholder="Choose a password")
+                        input(type="password", id="password", class="form-control", placeholder="Choose a password")
                     div(class="form-group")
                         label(for="email")="Email"
-                        input(type="email", class="form-control", place="Enter your email")
+                        input(type="email", id="email", class="form-control", placeholder="Enter your email")
                     div(class="form-group")
                         label(for="age")="Age"
-                        input(type="number", class="form-control", place="Enter your age")
+                        input(type="number", id="age", class="form-control", placeholder="Enter your age")
         div(class="card text-white bg-dark mb-3")
             div(class="card-header")="What is your favorite color?"
             div(class="card-body")
@@ -34,16 +34,35 @@ block content
                     label(class="btn btn-warning")
                         input(type="radio", name="colors", id="yellow", value="yellow", autocomplete="off")
                         | Yellow
-            div(class="card-header")="What is your fantasy archetype?"
+            div(class="card-header")="What is your favorite fantasy archetype?"
             div(class="card-body")
                 div(class="btn-group btn-group-toggle", data-toggle="buttons")
                     label(class="btn btn-danger active")
                         input(type="radio", name="archetypes", id="fighter", value="fighter", autocomplete="off", checked="")
                         | Fighter
+                    label(class="btn btn-primary")
+                        input(type="radio", name="archetypes", id="wizard", value="wizard", autocomplete="off")
+                        | Wizard
+                    label(class="btn btn-light")
+                        input(type="radio", name="archetypes", id="cleric", value="cleric", autocomplete="off")
+                        | Cleric
+                    label(class="btn btn-warning")
+                        input(type="radio", name="archetypes", id="rogue", value="rogue", autocomplete="off")
+                        | Rogue
+                    
             div(class="card-header")="What number am I thinking of?"
             div(class="card-body")
                 div(class="btn-group btn-group-toggle", data-toggle="buttons")
                     label(class="btn btn-danger active")
                         input(type="radio", name="number", id="one", value="one", autocomplete="off", checked="")
                         | 1
+                    label(class="btn btn-success")
+                        input(type="radio", name="number", id="two", value="two", autocomplete="off")
+                        | 2
+                    label(class="btn btn-primary")
+                        input(type="radio", name="number", id="three", value="three", autocomplete="off")
+                        | 3
+                    label(class="btn btn-light")
+                        input(type="radio", name="number", id="four", value="four", autocomplete="off")
+                        | 4
     input(type="submit", class="btn btn-primary btn-lg btn-block")
