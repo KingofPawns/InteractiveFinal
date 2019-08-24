@@ -2,7 +2,7 @@ extends layout.pug
 
 block content
     form(action="/", method="POST")
-        div(class="card text-white bg-primary mb-3")
+        div(class="card text-white bg-success mb-3")
             div(class="card-header")="Sign Up"
             div(class="card-body")
                 fieldset
@@ -22,17 +22,28 @@ block content
             div(class="card-header")="What is your favorite color?"
             div(class="card-body")
                 div(class="btn-group btn-group-toggle", data-toggle="buttons")
-                    label(class="btn btn-primary active")
+                    label(class="btn btn-danger active")
                         input(type="radio", name="colors", id="red", value="red", autocomplete="off", checked="")
                         | Red
-                    label(class="btn btn-primary")
+                    label(class="btn btn-success")
                         input(type="radio", name="colors", id="green", value="green" autocomplete="off")
                         | Green
                     label(class="btn btn-primary")
                         input(type="radio", name="colors", id="blue", value="blue", autocomplete="off")
                         | Blue
-                    label(class="btn btn-primary")
+                    label(class="btn btn-warning")
                         input(type="radio", name="colors", id="yellow", value="yellow", autocomplete="off")
                         | Yellow
-
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            div(class="card-header")="What is your fantasy archetype?"
+            div(class="card-body")
+                div(class="btn-group btn-group-toggle", data-toggle="buttons")
+                    label(class="btn btn-danger active")
+                        input(type="radio", name="archetypes", id="fighter", value="fighter", autocomplete="off", checked="")
+                        | Fighter
+            div(class="card-header")="What number am I thinking of?"
+            div(class="card-body")
+                div(class="btn-group btn-group-toggle", data-toggle="buttons")
+                    label(class="btn btn-danger active")
+                        input(type="radio", name="number", id="one", value="one", autocomplete="off", checked="")
+                        | 1
+    input(type="submit", class="btn btn-primary btn-lg btn-block")
