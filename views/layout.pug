@@ -1,9 +1,19 @@
 html
     head
         title=title
-        link(href="/styles/bootstrap.css",typ="text/css",rel="stylesheet")
+        link(href="/styles/bootstrap.css",type="text/css",rel="stylesheet")
+        link(href="/styles/style.css",type="text/css",rel="stylesheet")
     body
-        nav
-            span="Greetings!"
+        nav(class="navbar navbar-expand-lg navbar-dark bg-dark") 
+            //-Set nav to bg-primary for blue, bg-dark for grey/black
+            //-a(class="navbar-brand",href="/")="Logo"
+            div(class="navbar-collapse collapse" id="navbarColor01")
+                ul(class="navbar-nav mr-auto")
+                    li(class="nav-item active")
+                        a(class="nav-link", href="/")="Home"
+                    li(class="nav-item active")
+                        a(class="nav-link", href="/")="Log In"
+                    li(class="nav-item active")
+                        a(class="nav-link", href="/")="Sign Up"
         div(id="contentDiv")
             block content
