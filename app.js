@@ -43,7 +43,16 @@ app.get('/', function(rec, res){
     res.render("index");
 });
 
-app.post('/', function(rec, res){
+app.post('/', function(req, res){
+    var user= User({
+        Username: req.body,
+        Password: String,
+        IsManager: Boolean,
+        IsActive: Boolean,
+        Email: String,
+        QuestionAnswerId: Number
+      });
+  
     res.render("index");
 });
 
