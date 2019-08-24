@@ -1,23 +1,22 @@
 extends layout.pug
 
 block content
-    form(action="/", method="POST")
+    form(action="/register", method="POST")
         div(class="card text-white bg-success mb-3")
             div(class="card-header")="Sign Up"
             div(class="card-body")
-                fieldset
                     div(class="form-group")
                         label(for="username")="Username"
-                        input(type="text", id="username", class="form-control", placeholder="Enter a username")
+                        input(type="text", id="username", name="username", class="form-control", placeholder="Enter a username")
                     div(class="form-group")
                         label(for="password")="Password"
-                        input(type="password", id="password", class="form-control", placeholder="Choose a password")
+                        input(type="password", id="password", name="id", class="form-control", placeholder="Choose a password")
                     div(class="form-group")
                         label(for="email")="Email"
-                        input(type="email", id="email", class="form-control", placeholder="Enter your email")
+                        input(type="email", id="email", name="email", class="form-control", placeholder="Enter your email")
                     div(class="form-group")
                         label(for="age")="Age"
-                        input(type="number", id="age", class="form-control", placeholder="Enter your age")
+                        input(type="number", id="age", name="age" class="form-control", placeholder="Enter your age")
         div(class="card text-white bg-dark mb-3")
             div(class="card-header")="What is your favorite color?"
             div(class="card-body")
@@ -65,4 +64,4 @@ block content
                     label(class="btn btn-light")
                         input(type="radio", name="number", id="four", value="four", autocomplete="off")
                         | 4
-    input(type="submit", class="btn btn-primary btn-lg btn-block")
+        input(type="submit", class="btn btn-primary btn-lg btn-block")
