@@ -18,7 +18,23 @@ app.get('/', function(rec, res){
 });
 
 app.get('/register', function(req, res){
-    res.render("register");
+    const model = {
+        postRoute: "/register",
+        header: "Sign Up!",
+        user: {},
+        answers: {
+            question1: {
+                red: "active",
+            },
+            question2: {
+                fighter: "active"
+            },
+            question3: {
+                one: "active"
+            },
+        }
+    }
+    res.render("register", model);
 });
 
 app.get('/login', function(req, res){
@@ -27,4 +43,12 @@ app.get('/login', function(req, res){
 
 app.post('/login', function(req, res){
     res.render("index");
+})
+
+app.get('/user', function(req, res){
+    //Get User infor
+})
+
+app.put('/user', function(req, res){
+
 })
