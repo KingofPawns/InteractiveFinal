@@ -1,67 +1,101 @@
 extends layout.pug
 
 block content
-    form(action="/register", method="POST")
+    form(action=postRoute, method="POST")
         div(class="card text-white bg-success mb-3")
-            div(class="card-header")="Sign Up"
+            div(class="card-header")=header
             div(class="card-body")
                     div(class="form-group")
                         label(for="username")="Username"
-                        input(type="text", id="username", name="username", class="form-control", placeholder="Enter a username")
+                        input(type="text", id="username", name="username", class="form-control", placeholder="Enter a username",value=user.username)
                     div(class="form-group")
                         label(for="password")="Password"
-                        input(type="password", id="password", name="id", class="form-control", placeholder="Choose a password")
+                        input(type="password", id="password", name="id", class="form-control", placeholder="Choose a password", value=user.password)
                     div(class="form-group")
                         label(for="email")="Email"
-                        input(type="email", id="email", name="email", class="form-control", placeholder="Enter your email")
+                        input(type="email", id="email", name="email", class="form-control", placeholder="Enter your email", value=user.email)
                     div(class="form-group")
                         label(for="age")="Age"
-                        input(type="number", id="age", name="age" class="form-control", placeholder="Enter your age")
-        div(class="card text-white bg-dark mb-3")
+                        input(type="number", id="age", name="age" class="form-control", placeholder="Enter your age", value=user.age)
+        div(class="card text-black bg-light border-primary mb-3")
             div(class="card-header")="What is your favorite color?"
             div(class="card-body")
                 div(class="btn-group btn-group-toggle", data-toggle="buttons")
-                    label(class="btn btn-danger active")
-                        input(type="radio", name="colors", id="red", value="red", autocomplete="off", checked="")
-                        | Red
-                    label(class="btn btn-success")
-                        input(type="radio", name="colors", id="green", value="green" autocomplete="off")
-                        | Green
-                    label(class="btn btn-primary")
-                        input(type="radio", name="colors", id="blue", value="blue", autocomplete="off")
-                        | Blue
-                    label(class="btn btn-warning")
-                        input(type="radio", name="colors", id="yellow", value="yellow", autocomplete="off")
-                        | Yellow
+                    label(class="btn btn-outline-danger " + answers.question1.red)
+                        if answers.question1.red
+                            input(type="radio", name="colors", id="red", value="red", autocomplete="off", checked="")
+                            | Red
+                        else
+                            input(type="radio", name="colors", id="red", value="red", autocomplete="off")
+                            | Red
+                    label(class="btn btn-outline-success " + answers.question1.green )
+                        if answers.question1.green
+                            input(type="radio", name="colors", id="green", value="green" autocomplete="off", checked="")
+                            | Green
+                        else
+                            input(type="radio", name="colors", id="green", value="green" autocomplete="off")
+                            | Green
+                    label(class="btn btn-outline-primary " + answers.question1.blue)
+                        if answers.question1.blue
+                            input(type="radio", name="colors", id="blue", value="blue", autocomplete="off", checked="")
+                            | Blue
+                        else
+                            input(type="radio", name="colors", id="blue", value="blue", autocomplete="off")
+                            | Blue
+                    label(class="btn btn-outline-warning " + answers.question1.yellow)
+                        if answers.question1.yellow
+                            input(type="radio", name="colors", id="yellow", value="yellow", autocomplete="off", checked="")
+                            | Yellow
+                        else
+                            input(type="radio", name="colors", id="yellow", value="yellow", autocomplete="off")
+                            | Yellow
             div(class="card-header")="What is your favorite fantasy archetype?"
             div(class="card-body")
                 div(class="btn-group btn-group-toggle", data-toggle="buttons")
-                    label(class="btn btn-danger active")
-                        input(type="radio", name="archetypes", id="fighter", value="fighter", autocomplete="off", checked="")
-                        | Fighter
-                    label(class="btn btn-primary")
-                        input(type="radio", name="archetypes", id="wizard", value="wizard", autocomplete="off")
-                        | Wizard
-                    label(class="btn btn-light")
-                        input(type="radio", name="archetypes", id="cleric", value="cleric", autocomplete="off")
-                        | Cleric
-                    label(class="btn btn-warning")
-                        input(type="radio", name="archetypes", id="rogue", value="rogue", autocomplete="off")
-                        | Rogue
+                    label(class="btn btn-primary " + answers.question2.fighter)
+                        if answers.question2.fighter
+                            input(type="radio", name="archetypes", id="fighter", value="fighter", autocomplete="off", checked="")
+                            | Fighter
+                        else
+                            input(type="radio", name="archetypes", id="fighter", value="fighter", autocomplete="off")
+                            | Fighter  
+                    label(class="btn btn-primary " + answers.question2.wizard)
+                        if answers.question2.wizard
+                            input(type="radio", name="archetypes", id="wizard", value="wizard", autocomplete="off", checked="")
+                            | Wizard
+                        else
+                            input(type="radio", name="archetypes", id="wizard", value="wizard", autocomplete="off")
+                            | Wizard
+                    label(class="btn btn-primary " + answers.question2.cleric)
+                        if answers.question2.cleric
+                            input(type="radio", name="archetypes", id="cleric", value="cleric", autocomplete="off", checked="")
+                            | Cleric
+                        else
+                            input(type="radio", name="archetypes", id="cleric", value="cleric", autocomplete="off")
+                            | Cleric
+                    label(class="btn btn-primary " + answers.question2.rogue)
+                        if answers.question2.rogue
+                            input(type="radio", name="archetypes", id="rogue", value="rogue", autocomplete="off", checked="")
+                            | Rogue
+                        else
+                            input(type="radio", name="archetypes", id="rogue", value="rogue", autocomplete="off")
+                            | Rogue
                     
             div(class="card-header")="What number am I thinking of?"
             div(class="card-body")
                 div(class="btn-group btn-group-toggle", data-toggle="buttons")
-                    label(class="btn btn-danger active")
-                        input(type="radio", name="number", id="one", value="one", autocomplete="off", checked="")
-                        | 1
-                    label(class="btn btn-success")
+                    label(class="btn btn-success " + answers.question3.one)
+                        if answers.question3.one
+                            input(type="radio", name="number", id="one", value="one", autocomplete="off", checked="")
+                            | 1
+                        
+                    label(class="btn btn-success " + answers.question3.two)
                         input(type="radio", name="number", id="two", value="two", autocomplete="off")
                         | 2
-                    label(class="btn btn-primary")
+                    label(class="btn btn-success " + answers.question3.three)
                         input(type="radio", name="number", id="three", value="three", autocomplete="off")
                         | 3
-                    label(class="btn btn-light")
+                    label(class="btn btn-success " + answers.question4.four)
                         input(type="radio", name="number", id="four", value="four", autocomplete="off")
                         | 4
         input(type="submit", class="btn btn-primary btn-lg btn-block")

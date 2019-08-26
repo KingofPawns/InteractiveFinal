@@ -46,6 +46,25 @@ app.get('/', function (rec, res) {
     res.render("index");
 });
 
+app.get('/register', function(req, res){
+    const model = {
+        postRoute: "/register",
+        header: "Sign Up!",
+        user: {},
+        answers: {
+            question1: {
+                red: "active",
+            },
+            question2: {
+                fighter: "active"
+            },
+            question3: {
+                one: "active"
+            },
+        }
+    }
+    res.render("register", model);
+});
 // for parsing application/json
 app.use(bodyParser.json());
 
@@ -74,3 +93,12 @@ app.post('/register', function (req, res) {
 app.get('/register', function (rec, res) {
     res.render("register");
 });
+})
+
+app.get('/user', function(req, res){
+    //Get User infor
+})
+
+app.put('/user', function(req, res){
+
+})
