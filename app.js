@@ -65,7 +65,7 @@ app.post('/register', function (req, res) {
         IsManager: false,
         IsActive: true,
         Email: req.body.email,
-        QuestionAnswerId: 1,
+        QuestionAnswerId: User.find().count() + 1,
     });
     user.save();
     res.render("index");
