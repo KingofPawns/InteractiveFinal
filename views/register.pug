@@ -88,14 +88,28 @@ block content
                         if answers.question3.one
                             input(type="radio", name="number", id="one", value="one", autocomplete="off", checked="")
                             | 1
-                        
+                        else
+                            input(type="radio", name="number", id="one", value="one", autocomplete="off")
+                            | 1
                     label(class="btn btn-success " + answers.question3.two)
-                        input(type="radio", name="number", id="two", value="two", autocomplete="off")
-                        | 2
+                        if answers.question3.two
+                            input(type="radio", name="number", id="two", value="two", autocomplete="off", checked="")
+                            | 2
+                        else
+                            input(type="radio", name="number", id="two", value="two", autocomplete="off")
+                            | 2
                     label(class="btn btn-success " + answers.question3.three)
-                        input(type="radio", name="number", id="three", value="three", autocomplete="off")
-                        | 3
-                    label(class="btn btn-success " + answers.question4.four)
-                        input(type="radio", name="number", id="four", value="four", autocomplete="off")
-                        | 4
+                        if answers.question3.three
+                            input(type="radio", name="number", id="three", value="three", autocomplete="off", checked="")
+                            | 3
+                        else
+                            input(type="radio", name="number", id="three", value="three", autocomplete="off")
+                            | 3
+                    label(class="btn btn-success " + answers.question3.four)
+                        if answers.question3.four
+                            input(type="radio", name="number", id="four", value="four", autocomplete="off")
+                            | 4
+                        else
+                            input(type="radio", name="number", id="four", value="four", autocomplete="off")
+                            | 4
         input(type="submit", class="btn btn-primary btn-lg btn-block")

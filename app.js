@@ -65,15 +65,6 @@ app.get('/register', function(req, res){
     }
     res.render("register", model);
 });
-// for parsing application/json
-app.use(bodyParser.json());
-
-// for parsing application/xwww-
-app.use(bodyParser.urlencoded({ extended: true }));
-//form-urlencoded
-
-// for parsing multipart/form-data
-app.use(upload.array());
 
 app.post('/register', function (req, res) {
     console.log(req.body);
@@ -90,15 +81,51 @@ app.post('/register', function (req, res) {
     res.render("index");
 });
 
-app.get('/register', function (rec, res) {
-    res.render("register");
+app.get('/login', function(req, res){
+    res.render("login");
 });
-})
+
+app.post('/login', function(req, res){
+    var username = req.body.username;
+    var password = req.body.password;
+
+    var login = User.findOne({username: username}).exec(function (error, user) {
+        if(!user) {
+            var noUserError = new Error("No user found with username: " + username);
+            noUserError.status = 401;
+            return noUserError;
+        }
+        else if(user.password !== password) {
+            var passwordError = new Error("Incorrect password");
+            passwordError = 401;
+            return passwordError;
+        }
+        else return user;
+    });
+
+    if((typeof login) === Error) {
+        console.log(login);
+    }
+    else {
+        console.log(login);
+    }
+});
 
 app.get('/user', function(req, res){
-    //Get User infor
-})
+    //Get User info
+});
 
 app.put('/user', function(req, res){
 
-})
+});
+
+// for parsing application/json
+app.use(bodyParser.json());
+
+// for parsing application/xwww-
+app.use(bodyParser.urlencoded({ extended: true }));
+//form-urlencoded
+
+// for parsing multipart/form-data
+app.use(upload.array());
+
