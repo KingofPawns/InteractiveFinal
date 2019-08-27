@@ -119,6 +119,31 @@ app.put('/user', function(req, res){
 
 });
 
+app.get('/admin', function (rec, res) {
+    UserList(res);
+})
+
+app.get('/suspend/:username', function (rec, res){
+
+    
+    UserList(res);
+})
+
+app.get('/activate/:username', function (rec, res){
+
+
+    UserList(res);
+})
+
+function UserList(res) {
+    var users = User.find().exec(function(err, results){
+        var model = {
+            users: results
+        }
+        res.render("admin", model);
+    });
+}
+
 // for parsing application/json
 app.use(bodyParser.json());
 
