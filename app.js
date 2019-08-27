@@ -5,9 +5,19 @@ const multer = require('multer');
 const upload = multer();
 const port = 3000;
 const app = express();
+const bcrypt = require('bcrypt-nodejs');
 const Schema = mongoose.Schema;
 const conn = mongoose.connection;
 
+// for parsing application/json
+app.use(bodyParser.json());
+
+// for parsing application/xwww-
+app.use(bodyParser.urlencoded({ extended: true }));
+//form-urlencoded
+
+// for parsing multipart/form-data
+app.use(upload.array());
 
 mongoose.connect('mongodb+srv://Admin:1234@webfinal-k4s0e.mongodb.net/WebFinal?retryWrites=true&w=majority', { useNewUrlParser: true }).
     catch(error => console.log(error));
@@ -46,7 +56,7 @@ app.get('/', function (rec, res) {
     res.render("index");
 });
 
-app.get('/register', function(req, res){
+app.get('/register', function (req, res) {
     const model = {
         postRoute: "/register",
         header: "Sign Up!",
@@ -68,34 +78,39 @@ app.get('/register', function(req, res){
 
 app.post('/register', function (req, res) {
     console.log(req.body);
+    var UserCount = User.find().count();
+    if (UserCount != 'number') {
+        UserCount = 0;
+    }
+    var hash = bcrypt.hashSync(req.body.password);
     var user = new User({
         Username: req.body.username,
-        Password: req.body.password,
+        Password: hash,
         Age: req.body.age,
         IsManager: false,
         IsActive: true,
         Email: req.body.email,
-        QuestionAnswerId: User.find().count() + 1,
+        QuestionAnswerId: UserCount + 1,
     });
     user.save();
     res.render("index");
 });
 
-app.get('/login', function(req, res){
+app.get('/login', function (req, res) {
     res.render("login");
 });
 
-app.post('/login', function(req, res){
+app.post('/login', function (req, res) {
     var username = req.body.username;
     var password = req.body.password;
 
-    var login = User.findOne({username: username}).exec(function (error, user) {
-        if(!user) {
+    var login = User.findOne({ username: username }).exec(function (error, user) {
+        if (!user) {
             var noUserError = new Error("No user found with username: " + username);
             noUserError.status = 401;
             return noUserError;
         }
-        else if(user.password !== password) {
+        else if (!bcrypt.compare(user.password, password)) {
             var passwordError = new Error("Incorrect password");
             passwordError = 401;
             return passwordError;
@@ -103,7 +118,7 @@ app.post('/login', function(req, res){
         else return user;
     });
 
-    if((typeof login) === Error) {
+    if ((typeof login) === Error) {
         console.log(login);
     }
     else {
@@ -111,21 +126,13 @@ app.post('/login', function(req, res){
     }
 });
 
-app.get('/user', function(req, res){
+app.get('/user', function (req, res) {
     //Get User info
 });
 
-app.put('/user', function(req, res){
+app.put('/user', function (req, res) {
 
 });
 
-// for parsing application/json
-app.use(bodyParser.json());
 
-// for parsing application/xwww-
-app.use(bodyParser.urlencoded({ extended: true }));
-//form-urlencoded
-
-// for parsing multipart/form-data
-app.use(upload.array());
 
