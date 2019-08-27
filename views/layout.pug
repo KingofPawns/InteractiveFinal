@@ -13,9 +13,14 @@ html
                 ul(class="navbar-nav mr-auto")
                     li(class="nav-item active")
                         a(class="nav-link", href="/")="Home"
-                    li(class="nav-item active")
-                        a(class="nav-link", href="/login")="Log In"
-                    li(class="nav-item active")
-                        a(class="nav-link", href="/register")="Sign Up"
+                    if !session || !session.user
+                        li(class="nav-item active")
+                            a(id="login",class="nav-link", href="/login")="Log In"
+                    if !session || !session.user
+                        li(class="nav-item active")
+                            a(id="register",class="nav-link", href="/register")="Sign Up"
+                    if session && session.user
+                        li(class="nav-item active")
+                            a(id="logout",class="nav-link", href="/login")="Log Out"
         div(id="contentDiv")
             block content
