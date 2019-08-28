@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // for parsing multipart/form-data
 app.use(upload.array());
 
-app.use(session({secret: "none", resave: false, saveUninitialized: true}));
+app.use(session({ secret: "none", resave: false, saveUninitialized: true }));
 
 mongoose.connect('mongodb+srv://Admin:1234@webfinal-k4s0e.mongodb.net/WebFinal?retryWrites=true&w=majority', { useNewUrlParser: true }).
     catch(error => console.log(error));
@@ -31,6 +31,7 @@ var UserSchema = new Schema({
     Email: String,
     QuestionAnswerId: Number
 }, { collection: 'Users' });
+
 
 var User = mongoose.model('Users', UserSchema);
 
@@ -53,7 +54,76 @@ app.listen(port, function () {
 });
 
 app.get('/', function (req, res) {
-    res.render("index",{session:req.session});
+    (async function () {
+        try {
+            var q = Question.find().exec(function (error, questions) {
+                //console.log(questions);
+                var Question1 = [0, 0, 0, 0];
+                var Question2 = [0, 0, 0, 0];
+                var Question3 = [0, 0, 0, 0];
+                for (var i = 0; i < questions.length; i++) {
+                    if (questions.Question1 == "red") {
+                        Question1[0]++;
+                    } else if (questions.Question1 == "green") {
+                        Question1[1]++;
+                    } else if (questions.Question1 == "blue") {
+                        Question1[2]++;
+                    } else {
+                        Question1[3]++;
+                    }
+
+                    if (questions.Question2 == "fighter") {
+                        Question2[0]++;
+                    } else if (questions.Question2 == "wizard") {
+                        Question2[1]++;
+                    } else if (questions.Question2 == "cleric") {
+                        Question2[2]++;
+                    } else {
+                        Question2[3]++;
+                    }
+
+                    if (questions.Question3 == "one") {
+                        Question3[0]++;
+                    } else if (questions.Question3 == "two") {
+                        Question3[1]++;
+                    } else if (questions.Question3 == "three") {
+                        Question3[2]++;
+                    } else {
+                        Question3[3]++;
+                    }
+                }
+                var QuestionTotal = Question1[0] + Question1[1] + Question1[2] + Question1[3];
+                var model = {
+
+                    QuestionTotal: QuestionTotal,
+
+                    red: ((Question1[0]*1.00)/QuestionTotal)*100,
+                    green: ((Question1[1]*1.00)/QuestionTotal)*100,
+                    blue: ((Question1[2]*1.00)/QuestionTotal)*100,
+                    yellow: ((Question1[3]*1.00)/QuestionTotal)*100,
+
+                    fighter: ((Question2[0]*1.00)/QuestionTotal)*100,
+                    wizard: ((Question2[1]*1.00)/QuestionTotal)*100,
+                    cleric: ((Question2[2]*1.00)/QuestionTotal)*100,
+                    rogue: ((Question2[3]*1.00)/QuestionTotal)*100,
+
+                    one: ((Question3[0]*1.00)/QuestionTotal)*100,
+                    two: ((Question3[1]*1.00)/QuestionTotal)*100,
+                    three: ((Question3[2]*1.00)/QuestionTotal)*100,
+                    four: ((Question3[3]*1.00)/QuestionTotal)*100,
+                }
+                console.log(model.yellow);
+                req.session.model = model;
+                //console.log(req.session.model);
+                res.render("index", { session: req.session });
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }()).finally();
+
+
+
 });
 
 app.get('/register', function (req, res) {
@@ -72,7 +142,7 @@ app.get('/register', function (req, res) {
                 one: "active"
             },
         },
-        session:req.session
+        session: req.session
     }
     res.render("register", model);
 });
@@ -91,14 +161,32 @@ app.post('/register', function (req, res) {
         IsManager: false,
         IsActive: true,
         Email: req.body.email,
-        QuestionAnswerId: UserCount + 1,
+        QuestionAnswerId: UserCount + 1
     });
+
+    var QuestionCount = Question.find().count();
+    if (QuestionCount != 'number') {
+        QuestionCount = 0;
+    }
+    var question = new Question({
+        question1: req.body.colors,
+        question2: req.body.archetypes,
+        question3: req.body.number,
+        AnswerId: QuestionCount + 1
+    });
+    question.save();
     user.save();
-    res.render("index",{session:req.session});
+    res.render("index", { session: req.session });
 });
 
 app.get('/login', function (req, res) {
-    res.render("login",{session:req.session});
+    res.render("login", { session: req.session });
+});
+
+app.get('/logout', function (req, res) {
+    console.log("hello");
+    req.session.destroy(function (req, res) { });
+    res.render("logout", { session: req.session });
 });
 
 app.post('/login', function (req, res) {
@@ -106,37 +194,37 @@ app.post('/login', function (req, res) {
     var password = req.body.password;
 
     var login = User.findOne({ Username: username }).exec(function (error, user) {
-        console.log(password);
-        console.log(user.Password);
-        console.log(bcrypt.compareSync(password,user.Password));
-        console.log(user);
+        // console.log(password);
+        // console.log(user.Password);
+        // console.log(bcrypt.compareSync(password,user.Password));
+        // console.log(user);
         if (!user) {
             console.log("1");
             var noUserError = new Error("No user found with username: " + username);
             noUserError.status = 401;
-            res.render("/login",{session:req.session});
+            res.render("/login", { session: req.session });
         }
-        else if (!bcrypt.compareSync(password,user.Password)) {
+        else if (!bcrypt.compareSync(password, user.Password)) {
             console.log("2");
             var passwordError = new Error("Incorrect password");
             passwordError = 401;
-            res.render("/login",{session:req.session});
-            
+            res.render("/login", { session: req.session });
+
         }
         else {
             console.log("3");
             req.session.user = user;
-            res.render("index",{session:req.session});
+            res.render("index", { session: req.session });
         }
     });
 
-    if ((typeof login) === Error) {
-        console.log(login);
-    }
-    else {
-        console.log(login);
-    }
-    
+    // if ((typeof login) === Error) {
+    //     console.log(login);
+    // }
+    // else {
+    //     console.log(login);
+    // }
+
 });
 
 app.get('/user', function (req, res) {

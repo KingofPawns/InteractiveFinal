@@ -6,40 +6,45 @@ block content
         div(class="card-body")
             p(class="card-text")="Green"
             div(class="progress")
-                div(class="progress-bar bg-success" role="progressbar" style="width:45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100")
+                div(class="progress-bar bg-success" role="progressbar" style=`width:${session.model.green}%` aria-valuenow=session.model.green aria-valuemin="0"  aria-valuemax=session.model.QuestionTotal)
             p(class="card-text")="Yellow"
             div(class="progress")
-                div(class="progress-bar bg-warning" role="progressbar" style="width:10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100")
+                div(class="progress-bar bg-warning" role="progressbar" style=`width:${session.model.yellow}%` aria-valuenow=session.model.yellow aria-valuemin="0" aria-valuemax=session.model.QuestionTotal)
             p(class="card-text")="Blue"
             div(class="progress")
-                div(class="progress-bar bg-info" role="progressbar" style="width:30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100")
+                div(class="progress-bar bg-info" role="progressbar" style=`width:${session.model.blue}%`   aria-valuenow=session.model.blue aria-valuemin="0"   aria-valuemax=session.model.QuestionTotal)
             p(class="card-text")="Red"
             div(class="progress")
-                div(class="progress-bar bg-danger" role="progressbar" style="width:15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100")
+                div(class="progress-bar bg-danger" role="progressbar" style=`width:${session.model.red}%`  aria-valuenow=session.model.red aria-valuemin="0"    aria-valuemax=session.model.QuestionTotal)
 
     div(class="card text-white bg-success mb-3")
         div(class="card-header")="What is your favorite fantasy archetype?"
         div(class="card-body")
             p(class="card-text")="Rogue"
             div(class="progress")
-                div(class="progress-bar bg-warning" role="progressbar" style="width:31%" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100")
+                div(class="progress-bar bg-warning" role="progressbar" style=`width:${session.model.rogue}%` aria-valuenow=session.model.rogue aria-valuemin="0"   aria-valuemax=session.model.QuestionTotal)
             p(class="card-text")="Wizard"
             div(class="progress")
-                div(class="progress-bar bg-info" role="progressbar" style="width:35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100")
+                div(class="progress-bar bg-info" role="progressbar" style=`width:${session.model.wizard}%`    aria-valuenow=session.model.wizard aria-valuemin="0"  aria-valuemax=session.model.QuestionTotal)
             p(class="card-text")="Fighter"
             div(class="progress")
-                div(class="progress-bar bg-danger" role="progressbar" style="width:34%" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100")
+                div(class="progress-bar bg-danger" role="progressbar" style=`width:${session.model.fighter}%`  aria-valuenow=session.model.fighter aria-valuemin="0" aria-valuemax=session.model.QuestionTotal)
+            p(class="card-text")="Cleric"
+            div(class="progress")
+                div(class="progress-bar bg-danger" role="progressbar" style=`width:${session.model.cleric}%`  aria-valuenow=session.model.cleric aria-valuemin="0"  aria-valuemax=session.model.QuestionTotal)
 
     div(class="card text-white bg-primary mb-3")
-        div(class="card-header")="What is your favorite color?"
+        div(class="card-header")="What number was I thinking of?"
         div(class="card-body")
-            p(class="card-text")="Green"
+            p(class="card-text")="One"
             div(class="progress")
-                div(class="progress-bar bg-success" role="progressbar" style="width:45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100")
-            p(class="card-text")="Yellow"
-            p(class="card-text")="Blue"
+                div(class="progress-bar bg-success" role="progressbar" style=`width:${session.model.one}%` aria-valuenow=session.model.one aria-valuemin="0"   aria-valuemax=session.model.QuestionTotal)
+            p(class="card-text")="Two"
             div(class="progress")
-                div(class="progress-bar bg-info" role="progressbar" style="width:30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100")
-            p(class="card-text")="Red"
+                div(class="progress-bar bg-info" role="progressbar" style=`width:${session.model.two}%`    aria-valuenow=session.model.two aria-valuemin="0"   aria-valuemax=session.model.QuestionTotal)
+            p(class="card-text")="Three"
             div(class="progress")
-                div(class="progress-bar bg-danger" role="progressbar" style="width:15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100")
+                div(class="progress-bar bg-danger" role="progressbar" style=`width:${session.model.three}%`  aria-valuenow=session.model.three aria-valuemin="0" aria-valuemax=session.model.QuestionTotal)
+            p(class="card-text")="Four"
+            div(class="progress")
+                div(class="progress-bar bg-danger" role="progressbar" style=`width:${session.model.four}%`  aria-valuenow=session.model.four aria-valuemin="0"  aria-valuemax=session.model.QuestionTotal)
