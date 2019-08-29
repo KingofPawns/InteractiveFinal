@@ -206,9 +206,9 @@ app.post('/login', function (req, res) {
         // console.log(user.Password);
         // console.log(bcrypt.compareSync(password,user.Password));
         // console.log(user);
-        if (!user) {
+        if (!user || !user.IsActive) {
             console.log("1");
-            var noUserError = new Error("No user found with username: " + username);
+            var noUserError = new Error("No Active User found with username: " + username);
             noUserError.status = 401;
             res.render("login", { session: req.session });
         }
