@@ -120,7 +120,6 @@ async function renderIndex(req, res) {
             }
             //console.log(model.yellow);
             req.session.model = model;
-            //console.log(req.session.model);
             res.render("index", { session: req.session });
         });
     } catch (err) {
@@ -131,6 +130,7 @@ async function renderIndex(req, res) {
 app.get('/register', function (req, res) {
     const model = {
         postRoute: "/register",
+        methodType: "POST",
         header: "Sign Up!",
         user: {},
         answers: {
@@ -187,6 +187,7 @@ app.post('/register', function (req, res) {
 });
 
 app.get('/login', function (req, res) {
+    console.log("login");
     res.render("login", { session: req.session });
 });
 
@@ -209,13 +210,13 @@ app.post('/login', function (req, res) {
             console.log("1");
             var noUserError = new Error("No user found with username: " + username);
             noUserError.status = 401;
-            res.render("/login", { session: req.session });
+            res.render("login", { session: req.session });
         }
         else if (!bcrypt.compareSync(password, user.Password)) {
             console.log("2");
             var passwordError = new Error("Incorrect password");
             passwordError = 401;
-            res.render("/login", { session: req.session });
+            res.render("login", { session: req.session });
 
         }
         else {
@@ -236,10 +237,11 @@ app.post('/login', function (req, res) {
 });
 
 app.get('/user', function (req, res) {
-    //console.log(req.session.user.QuestionAnswerId);
+    console.log("Called User");
     var q = Question.findOne({ AnswerId: req.session.user.QuestionAnswerId }).exec(function (error, questions) {
         const model = {
             postRoute: "/user",
+            methodType: "POST",
             header: "My Account",
             user: req.session.user,
             answers: {
@@ -257,7 +259,43 @@ app.get('/user', function (req, res) {
     })
 });
 
+app.post('/user', function (req, res) {
+    console.log(req.session.user);
+    User.findOne({Username: req.session.user.username}).exec(function (error, user) {
+        console.log(user);
+        user.Username = req.body.Username;
+        user.Password = bcrypt.hashSync(req.body.Password);
+        user.Age = req.body.Age;
+        user.Email = req.body.Email;
+        console.log(user);
+        user.save();
+        renderIndex(req, res);
+    })
+    
+    // var user = new User({
+    //     Username: req.body.username,
+    //     Password: hash,
+    //     Age: req.body.age,
+    //     IsManager: false,
+    //     IsActive: true,
+    //     Email: req.body.email,
+    //     QuestionAnswerId: UserCount + 1
+    // });
+
+    // var QuestionCount = Question.find().count();
+    // if (QuestionCount != 'number') {
+    //     QuestionCount = 0;
+    // }
+    // var question = new Question({
+    //     question1: req.body.colors,
+    //     question2: req.body.archetypes,
+    //     question3: req.body.number,
+    //     AnswerId: QuestionCount + 1
+    // });    
+});
+
 app.get('/admin', function (rec, res) {
+    
     UserList(res);
 })
 
