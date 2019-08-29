@@ -285,20 +285,27 @@ app.post('/user', function (req, res) {
 });
 
 app.get('/admin', function (req, res) {
-    
     UserList(res, req);
 })
 
 app.get('/suspend/:username', function (req, res) {
+    User.findOne({Username: req.params.username}).exec(function (error, user) {
+        user.IsActive = false;
+        User.findOneAndUpdate({Username: req.params.username}, user, function (error, doc){
 
-
-    UserList(res);
+        });
+    UserList(res, req);
+    });
 })
 
 app.get('/activate/:username', function (req, res) {
+    User.findOne({Username: req.params.username}).exec(function (error, user) {
+        user.IsActive = true;
+        User.findOneAndUpdate({Username: req.params.username}, user, function (error, doc){
 
-
-    UserList(res);
+        });
+    UserList(res, req);
+    });
 })
 
 function UserList(res, req) {
