@@ -7,43 +7,43 @@ block content
             div(class="card-body")
                     div(class="form-group")
                         label(for="username")="Username"
-                        input(type="text", id="username", name="username", class="form-control", placeholder="Enter a username",value=user.username)
+                        input(type="text", id="username", name="username", class="form-control", placeholder="Enter a username",value=user.Username)
                     div(class="form-group")
                         label(for="password")="Password"
-                        input(type="password", id="password", name="password", class="form-control", placeholder="Choose a password", value=user.password)
+                        input(type="password", id="password", name="password", class="form-control", placeholder="Choose a password", value=user.Password)
                     div(class="form-group")
                         label(for="email")="Email"
-                        input(type="email", id="email", name="email", class="form-control", placeholder="Enter your email", value=user.email)
+                        input(type="email", id="email", name="email", class="form-control", placeholder="Enter your email", value=user.Email)
                     div(class="form-group")
                         label(for="age")="Age"
-                        input(type="number", id="age", name="age" class="form-control", placeholder="Enter your age", value=user.age)
+                        input(type="number", id="age", name="age" class="form-control", placeholder="Enter your age", value=user.Age)
         div(class="card text-black bg-light border-primary mb-3")
             div(class="card-header")="What is your favorite color?"
             div(class="card-body")
                 div(class="btn-group btn-group-toggle", data-toggle="buttons")
-                    label(class="btn btn-outline-danger " + answers.question1.red)
-                        if answers.question1.red
+                    label(class="btn btn-outline-danger " + answers.Question1.red)
+                        if answers.Question1.red
                             input(type="radio", name="colors", id="red", value="red", autocomplete="off", checked="")
                             | Red
                         else
                             input(type="radio", name="colors", id="red", value="red", autocomplete="off")
                             | Red
-                    label(class="btn btn-outline-success " + answers.question1.green )
-                        if answers.question1.green
+                    label(class="btn btn-outline-success " + answers.Question1.green )
+                        if answers.Question1.green
                             input(type="radio", name="colors", id="green", value="green" autocomplete="off", checked="")
                             | Green
                         else
                             input(type="radio", name="colors", id="green", value="green" autocomplete="off")
                             | Green
-                    label(class="btn btn-outline-primary " + answers.question1.blue)
-                        if answers.question1.blue
+                    label(class="btn btn-outline-primary " + answers.Question1.blue)
+                        if answers.Question1.blue
                             input(type="radio", name="colors", id="blue", value="blue", autocomplete="off", checked="")
                             | Blue
                         else
                             input(type="radio", name="colors", id="blue", value="blue", autocomplete="off")
                             | Blue
-                    label(class="btn btn-outline-warning " + answers.question1.yellow)
-                        if answers.question1.yellow
+                    label(class="btn btn-outline-warning " + answers.Question1.yellow)
+                        if answers.Question1.yellow
                             input(type="radio", name="colors", id="yellow", value="yellow", autocomplete="off", checked="")
                             | Yellow
                         else
@@ -52,29 +52,29 @@ block content
             div(class="card-header")="What is your favorite fantasy archetype?"
             div(class="card-body")
                 div(class="btn-group btn-group-toggle", data-toggle="buttons")
-                    label(class="btn btn-primary " + answers.question2.fighter)
-                        if answers.question2.fighter
+                    label(class="btn btn-primary " + answers.Question2.fighter)
+                        if answers.Question2.fighter
                             input(type="radio", name="archetypes", id="fighter", value="fighter", autocomplete="off", checked="")
                             | Fighter
                         else
                             input(type="radio", name="archetypes", id="fighter", value="fighter", autocomplete="off")
                             | Fighter  
-                    label(class="btn btn-primary " + answers.question2.wizard)
-                        if answers.question2.wizard
+                    label(class="btn btn-primary " + answers.Question2.wizard)
+                        if answers.Question2.wizard
                             input(type="radio", name="archetypes", id="wizard", value="wizard", autocomplete="off", checked="")
                             | Wizard
                         else
                             input(type="radio", name="archetypes", id="wizard", value="wizard", autocomplete="off")
                             | Wizard
-                    label(class="btn btn-primary " + answers.question2.cleric)
-                        if answers.question2.cleric
+                    label(class="btn btn-primary " + answers.Question2.cleric)
+                        if answers.Question2.cleric
                             input(type="radio", name="archetypes", id="cleric", value="cleric", autocomplete="off", checked="")
                             | Cleric
                         else
                             input(type="radio", name="archetypes", id="cleric", value="cleric", autocomplete="off")
                             | Cleric
-                    label(class="btn btn-primary " + answers.question2.rogue)
-                        if answers.question2.rogue
+                    label(class="btn btn-primary " + answers.Question2.rogue)
+                        if answers.Question2.rogue
                             input(type="radio", name="archetypes", id="rogue", value="rogue", autocomplete="off", checked="")
                             | Rogue
                         else
@@ -84,29 +84,29 @@ block content
             div(class="card-header")="What number am I thinking of?"
             div(class="card-body")
                 div(class="btn-group btn-group-toggle", data-toggle="buttons")
-                    label(class="btn btn-success " + answers.question3.one)
-                        if answers.question3.one
+                    label(class="btn btn-success " + answers.Question3.one)
+                        if answers.Question3.one
                             input(type="radio", name="number", id="one", value="one", autocomplete="off", checked="")
                             | 1
                         else
                             input(type="radio", name="number", id="one", value="one", autocomplete="off")
                             | 1
-                    label(class="btn btn-success " + answers.question3.two)
-                        if answers.question3.two
+                    label(class="btn btn-success " + answers.Question3.two)
+                        if answers.Question3.two
                             input(type="radio", name="number", id="two", value="two", autocomplete="off", checked="")
                             | 2
                         else
                             input(type="radio", name="number", id="two", value="two", autocomplete="off")
                             | 2
-                    label(class="btn btn-success " + answers.question3.three)
-                        if answers.question3.three
+                    label(class="btn btn-success " + answers.Question3.three)
+                        if answers.Question3.three
                             input(type="radio", name="number", id="three", value="three", autocomplete="off", checked="")
                             | 3
                         else
                             input(type="radio", name="number", id="three", value="three", autocomplete="off")
                             | 3
-                    label(class="btn btn-success " + answers.question3.four)
-                        if answers.question3.four
+                    label(class="btn btn-success " + answers.Question3.four)
+                        if answers.Question3.four
                             input(type="radio", name="number", id="four", value="four", autocomplete="off")
                             | 4
                         else

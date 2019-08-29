@@ -228,7 +228,26 @@ app.post('/login', function (req, res) {
 });
 
 app.get('/user', function (req, res) {
-    //Get User info
+    console.log(req.session.user.QuestionAnswerId);
+    var q = Question.findOne({ AnswerId: req.session.user.QuestionAnswerId }).exec(function (error, questions) {
+        console.log(q);
+        const model = {
+            postRoute: "/user",
+            header: "My Account",
+            user: req.session.user,
+            answers: {
+                Question1: {},
+                Question2: {},
+                Question3: {}
+            },
+            session: req.session
+        }
+        model.answers.Question1[questions.Question1] = "active";
+        model.answers.Question2[questions.Question2] = "active";
+        model.answers.Question3[questions.Question3] = "active";
+        console.log(model.answers);
+        res.render("register", model);
+    })
 });
 
 app.put('/user', function (req, res) {

@@ -21,7 +21,7 @@ html
                             a(id="register",class="nav-link", href="/register")="Sign Up"
                     if session && session.user
                         li(class="nav-item active")
-                            a(id="userprofile",class="nav-link", href="/", )="User Profile"
+                            a(id="userprofile",class="nav-link", href="/user", )="User Profile"
                     if session && session.user
                         li(class="nav-item active")
                             a(id="logout",class="nav-link", href="/logout")="Log Out"
