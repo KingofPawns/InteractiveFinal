@@ -25,5 +25,8 @@ html
                     if session && session.user
                         li(class="nav-item active")
                             a(id="logout",class="nav-link", href="/logout")="Log Out"
+                    if session && session.user && session.user.IsManager
+                        li(class="nav-item active")
+                            a(id="users",class="nav-link",href="/admin")="Users"
         div(id="contentDiv")
             block content

@@ -284,27 +284,28 @@ app.post('/user', function (req, res) {
     })  
 });
 
-app.get('/admin', function (rec, res) {
+app.get('/admin', function (req, res) {
     
-    UserList(res);
+    UserList(res, req);
 })
 
-app.get('/suspend/:username', function (rec, res) {
-
-
-    UserList(res);
-})
-
-app.get('/activate/:username', function (rec, res) {
+app.get('/suspend/:username', function (req, res) {
 
 
     UserList(res);
 })
 
-function UserList(res) {
+app.get('/activate/:username', function (req, res) {
+
+
+    UserList(res);
+})
+
+function UserList(res, req) {
     var users = User.find().exec(function (err, results) {
         var model = {
-            users: results
+            users: results,
+            session: req.session
         }
         res.render("admin", model);
     });
