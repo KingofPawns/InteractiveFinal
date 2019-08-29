@@ -42,7 +42,7 @@ var QuestionAnswerSchema = new Schema({
     AnswerId: Number
 }, { collection: 'QuestionAnswers' });
 
-var Question = mongoose.model('Question', QuestionAnswerSchema);
+var Question = mongoose.model('Questions', QuestionAnswerSchema);
 
 
 
@@ -54,6 +54,9 @@ app.listen(port, function () {
 });
 
 app.get('/', function (req, res) {
+    var mycount = null;
+    User.find().count(function (err, count) { mycount = count });
+    console.log(mycount);
     renderIndex(req, res);
 });
 
@@ -100,22 +103,22 @@ async function renderIndex(req, res) {
 
                 QuestionTotal: QuestionTotal,
 
-                red: ((Question1[0]*1.00)/QuestionTotal)*100,
-                green: ((Question1[1]*1.00)/QuestionTotal)*100,
-                blue: ((Question1[2]*1.00)/QuestionTotal)*100,
-                yellow: ((Question1[3]*1.00)/QuestionTotal)*100,
+                red: ((Question1[0] * 1.00) / QuestionTotal) * 100,
+                green: ((Question1[1] * 1.00) / QuestionTotal) * 100,
+                blue: ((Question1[2] * 1.00) / QuestionTotal) * 100,
+                yellow: ((Question1[3] * 1.00) / QuestionTotal) * 100,
 
-                fighter: ((Question2[0]*1.00)/QuestionTotal)*100,
-                wizard: ((Question2[1]*1.00)/QuestionTotal)*100,
-                cleric: ((Question2[2]*1.00)/QuestionTotal)*100,
-                rogue: ((Question2[3]*1.00)/QuestionTotal)*100,
+                fighter: ((Question2[0] * 1.00) / QuestionTotal) * 100,
+                wizard: ((Question2[1] * 1.00) / QuestionTotal) * 100,
+                cleric: ((Question2[2] * 1.00) / QuestionTotal) * 100,
+                rogue: ((Question2[3] * 1.00) / QuestionTotal) * 100,
 
-                one: ((Question3[0]*1.00)/QuestionTotal)*100,
-                two: ((Question3[1]*1.00)/QuestionTotal)*100,
-                three: ((Question3[2]*1.00)/QuestionTotal)*100,
-                four: ((Question3[3]*1.00)/QuestionTotal)*100,
+                one: ((Question3[0] * 1.00) / QuestionTotal) * 100,
+                two: ((Question3[1] * 1.00) / QuestionTotal) * 100,
+                three: ((Question3[2] * 1.00) / QuestionTotal) * 100,
+                four: ((Question3[3] * 1.00) / QuestionTotal) * 100,
             }
-            //console.log("Yellow:" + model.yellow);
+            //console.log(model.yellow);
             req.session.model = model;
             res.render("index", { session: req.session });
         });
@@ -146,35 +149,40 @@ app.get('/register', function (req, res) {
     res.render("register", model);
 });
 
-app.post('/register', function (req, res) { 
-    var UserCount = User.find().count();
-    if (UserCount != 'number') {
-        UserCount = 0;
-    }
-    var hash = bcrypt.hashSync(req.body.password);
-    var user = new User({
-        Username: req.body.username,
-        Password: hash,
-        Age: req.body.age,
-        IsManager: false,
-        IsActive: true,
-        Email: req.body.email,
-        QuestionAnswerId: UserCount + 1
+app.post('/register', function (req, res) {
+    //console.log(req.body);
+    User.find().count(function (err, UserCount) {
+        console.log("UserCount")
+        console.log(UserCount);
+        if (typeof UserCount !== 'number') {
+            UserCount = 0;
+        }
+        var hash = bcrypt.hashSync(req.body.password);
+        var user = new User({
+            Username: req.body.username,
+            Password: hash,
+            Age: req.body.age,
+            IsManager: false,
+            IsActive: true,
+            Email: req.body.email,
+            QuestionAnswerId: UserCount + 1
+        });
+        Question.find().count(function (err, QuestionCount) {
+            if (typeof QuestionCount !== 'number') {
+                QuestionCount = 0;
+            }
+            var question = new Question({
+                question1: req.body.colors,
+                question2: req.body.archetypes,
+                question3: req.body.number,
+                AnswerId: QuestionCount + 1
+            });
+            question.save();
+            user.save();
+            renderIndex(req, res);
+        });
     });
 
-    var QuestionCount = Question.find().count();
-    if (QuestionCount != 'number') {
-        QuestionCount = 0;
-    }
-    var question = new Question({
-        question1: req.body.colors,
-        question2: req.body.archetypes,
-        question3: req.body.number,
-        AnswerId: QuestionCount + 1
-    });
-    question.save();
-    user.save();
-    renderIndex(req, res);
     //res.render("index", { session: req.session });
 });
 
@@ -246,6 +254,7 @@ app.get('/user', function (req, res) {
         model.answers.Question1[questions.question1] = "active";
         model.answers.Question2[questions.question2] = "active";
         model.answers.Question3[questions.question3] = "active";
+        //console.log(model.answers);
         res.render("register", model);
     })
 });
@@ -290,20 +299,20 @@ app.get('/admin', function (rec, res) {
     UserList(res);
 })
 
-app.get('/suspend/:username', function (rec, res){
+app.get('/suspend/:username', function (rec, res) {
 
-    
+
     UserList(res);
 })
 
-app.get('/activate/:username', function (rec, res){
+app.get('/activate/:username', function (rec, res) {
 
 
     UserList(res);
 })
 
 function UserList(res) {
-    var users = User.find().exec(function(err, results){
+    var users = User.find().exec(function (err, results) {
         var model = {
             users: results
         }
