@@ -222,6 +222,7 @@ app.post('/login', function (req, res) {
         else {
             console.log("3");
             req.session.user = user;
+            req.session.user.Password = password;
             //res.render("index", { session: req.session });
             renderIndex(req, res);
         }
@@ -237,7 +238,6 @@ app.post('/login', function (req, res) {
 });
 
 app.get('/user', function (req, res) {
-    console.log("Called User");
     var q = Question.findOne({ AnswerId: req.session.user.QuestionAnswerId }).exec(function (error, questions) {
         const model = {
             postRoute: "/user",
@@ -260,38 +260,28 @@ app.get('/user', function (req, res) {
 });
 
 app.post('/user', function (req, res) {
-    console.log(req.session.user);
-    User.findOne({Username: req.session.user.username}).exec(function (error, user) {
-        console.log(user);
-        user.Username = req.body.Username;
-        user.Password = bcrypt.hashSync(req.body.Password);
-        user.Age = req.body.Age;
-        user.Email = req.body.Email;
-        console.log(user);
-        user.save();
-        renderIndex(req, res);
-    })
-    
-    // var user = new User({
-    //     Username: req.body.username,
-    //     Password: hash,
-    //     Age: req.body.age,
-    //     IsManager: false,
-    //     IsActive: true,
-    //     Email: req.body.email,
-    //     QuestionAnswerId: UserCount + 1
-    // });
+    User.findOne({Username: req.session.user.Username}).exec(function (error, user) {
+        user.Username = req.body.username;
+        user.Password = bcrypt.hashSync(req.body.password);
+        user.Age = req.body.age;
+        user.Email = req.body.email;
+        User.findOneAndUpdate({Username: req.session.user.Username}, user, function (error, doc){
 
-    // var QuestionCount = Question.find().count();
-    // if (QuestionCount != 'number') {
-    //     QuestionCount = 0;
-    // }
-    // var question = new Question({
-    //     question1: req.body.colors,
-    //     question2: req.body.archetypes,
-    //     question3: req.body.number,
-    //     AnswerId: QuestionCount + 1
-    // });    
+        });
+        req.session.user = user;
+
+        Question.findOne({ AnswerId: req.session.user.QuestionAnswerId }).exec(function (error, questions) {
+            questions.question1 = req.body.colors;
+            questions.question2 = req.body.archetypes;
+            questions.question3 = req.body.number;
+
+            Question.findOneAndUpdate({ AnswerId: req.session.user.QuestionAnswerId }, questions, function (error, doc){
+
+            });
+
+            renderIndex(req, res);
+        })
+    })  
 });
 
 app.get('/admin', function (rec, res) {
