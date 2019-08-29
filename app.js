@@ -36,9 +36,9 @@ var UserSchema = new Schema({
 var User = mongoose.model('Users', UserSchema);
 
 var QuestionAnswerSchema = new Schema({
-    Question1: Number,
-    Question2: Number,
-    Question3: Number,
+    question1: String,
+    question2: String,
+    question3: String,
     AnswerId: Number
 }, { collection: 'QuestionAnswers' });
 
@@ -54,77 +54,76 @@ app.listen(port, function () {
 });
 
 app.get('/', function (req, res) {
-    (async function () {
-        try {
-            var q = Question.find().exec(function (error, questions) {
-                //console.log(questions);
-                var Question1 = [0, 0, 0, 0];
-                var Question2 = [0, 0, 0, 0];
-                var Question3 = [0, 0, 0, 0];
-                for (var i = 0; i < questions.length; i++) {
-                    if (questions.Question1 == "red") {
-                        Question1[0]++;
-                    } else if (questions.Question1 == "green") {
-                        Question1[1]++;
-                    } else if (questions.Question1 == "blue") {
-                        Question1[2]++;
-                    } else {
-                        Question1[3]++;
-                    }
-
-                    if (questions.Question2 == "fighter") {
-                        Question2[0]++;
-                    } else if (questions.Question2 == "wizard") {
-                        Question2[1]++;
-                    } else if (questions.Question2 == "cleric") {
-                        Question2[2]++;
-                    } else {
-                        Question2[3]++;
-                    }
-
-                    if (questions.Question3 == "one") {
-                        Question3[0]++;
-                    } else if (questions.Question3 == "two") {
-                        Question3[1]++;
-                    } else if (questions.Question3 == "three") {
-                        Question3[2]++;
-                    } else {
-                        Question3[3]++;
-                    }
-                }
-                var QuestionTotal = Question1[0] + Question1[1] + Question1[2] + Question1[3];
-                var model = {
-
-                    QuestionTotal: QuestionTotal,
-
-                    red: ((Question1[0]*1.00)/QuestionTotal)*100,
-                    green: ((Question1[1]*1.00)/QuestionTotal)*100,
-                    blue: ((Question1[2]*1.00)/QuestionTotal)*100,
-                    yellow: ((Question1[3]*1.00)/QuestionTotal)*100,
-
-                    fighter: ((Question2[0]*1.00)/QuestionTotal)*100,
-                    wizard: ((Question2[1]*1.00)/QuestionTotal)*100,
-                    cleric: ((Question2[2]*1.00)/QuestionTotal)*100,
-                    rogue: ((Question2[3]*1.00)/QuestionTotal)*100,
-
-                    one: ((Question3[0]*1.00)/QuestionTotal)*100,
-                    two: ((Question3[1]*1.00)/QuestionTotal)*100,
-                    three: ((Question3[2]*1.00)/QuestionTotal)*100,
-                    four: ((Question3[3]*1.00)/QuestionTotal)*100,
-                }
-                console.log(model.yellow);
-                req.session.model = model;
-                //console.log(req.session.model);
-                res.render("index", { session: req.session });
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    }()).finally();
-
-
-
+    renderIndex(req, res);
 });
+
+async function renderIndex(req, res) {
+    try {
+        var q = Question.find().exec(function (error, questions) {
+            //console.log(questions);
+            var Question1 = [0, 0, 0, 0];
+            var Question2 = [0, 0, 0, 0];
+            var Question3 = [0, 0, 0, 0];
+            for (var i = 0; i < questions.length; i++) {
+                if (questions[i].question1 == "red") {
+                    Question1[0]++;
+                } else if (questions[i].question1 == "green") {
+                    Question1[1]++;
+                } else if (questions[i].question1 == "blue") {
+                    Question1[2]++;
+                } else {
+                    Question1[3]++;
+                }
+
+                if (questions[i].question2 == "fighter") {
+                    Question2[0]++;
+                } else if (questions[i].question2 == "wizard") {
+                    Question2[1]++;
+                } else if (questions[i].question2 == "cleric") {
+                    Question2[2]++;
+                } else {
+                    Question2[3]++;
+                }
+
+                if (questions[i].question3 == "one") {
+                    Question3[0]++;
+                } else if (questions[i].question3 == "two") {
+                    Question3[1]++;
+                } else if (questions[i].question3 == "three") {
+                    Question3[2]++;
+                } else {
+                    Question3[3]++;
+                }
+            }
+            var QuestionTotal = Question1[0] + Question1[1] + Question1[2] + Question1[3];
+            var model = {
+
+                QuestionTotal: QuestionTotal,
+
+                red: ((Question1[0]*1.00)/QuestionTotal)*100,
+                green: ((Question1[1]*1.00)/QuestionTotal)*100,
+                blue: ((Question1[2]*1.00)/QuestionTotal)*100,
+                yellow: ((Question1[3]*1.00)/QuestionTotal)*100,
+
+                fighter: ((Question2[0]*1.00)/QuestionTotal)*100,
+                wizard: ((Question2[1]*1.00)/QuestionTotal)*100,
+                cleric: ((Question2[2]*1.00)/QuestionTotal)*100,
+                rogue: ((Question2[3]*1.00)/QuestionTotal)*100,
+
+                one: ((Question3[0]*1.00)/QuestionTotal)*100,
+                two: ((Question3[1]*1.00)/QuestionTotal)*100,
+                three: ((Question3[2]*1.00)/QuestionTotal)*100,
+                four: ((Question3[3]*1.00)/QuestionTotal)*100,
+            }
+            console.log(model.yellow);
+            req.session.model = model;
+            //console.log(req.session.model);
+            res.render("index", { session: req.session });
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 app.get('/register', function (req, res) {
     const model = {
@@ -132,13 +131,13 @@ app.get('/register', function (req, res) {
         header: "Sign Up!",
         user: {},
         answers: {
-            question1: {
+            Question1: {
                 red: "active",
             },
-            question2: {
+            Question2: {
                 fighter: "active"
             },
-            question3: {
+            Question3: {
                 one: "active"
             },
         },
@@ -176,7 +175,8 @@ app.post('/register', function (req, res) {
     });
     question.save();
     user.save();
-    res.render("index", { session: req.session });
+    renderIndex(req, res);
+    //res.render("index", { session: req.session });
 });
 
 app.get('/login', function (req, res) {
@@ -214,7 +214,8 @@ app.post('/login', function (req, res) {
         else {
             console.log("3");
             req.session.user = user;
-            res.render("index", { session: req.session });
+            //res.render("index", { session: req.session });
+            renderIndex(req, res);
         }
     });
 
@@ -230,7 +231,6 @@ app.post('/login', function (req, res) {
 app.get('/user', function (req, res) {
     console.log(req.session.user.QuestionAnswerId);
     var q = Question.findOne({ AnswerId: req.session.user.QuestionAnswerId }).exec(function (error, questions) {
-        console.log(q);
         const model = {
             postRoute: "/user",
             header: "My Account",
@@ -242,9 +242,9 @@ app.get('/user', function (req, res) {
             },
             session: req.session
         }
-        model.answers.Question1[questions.Question1] = "active";
-        model.answers.Question2[questions.Question2] = "active";
-        model.answers.Question3[questions.Question3] = "active";
+        model.answers.Question1[questions.question1] = "active";
+        model.answers.Question2[questions.question2] = "active";
+        model.answers.Question3[questions.question3] = "active";
         console.log(model.answers);
         res.render("register", model);
     })
