@@ -250,10 +250,6 @@ app.get('/user', function (req, res) {
     })
 });
 
-app.put('/user', function (req, res) {
-
-});
-
 app.get('/admin', function (rec, res) {
     UserList(res);
 })
