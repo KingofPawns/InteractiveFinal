@@ -1,7 +1,7 @@
 extends layout.pug
 
 block content
-    form(action=postRoute, method="POST")
+    form(action=postRoute, method=methodType)
         div(class="card text-white bg-success mb-3")
             div(class="card-header")=header
             div(class="card-body")
