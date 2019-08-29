@@ -261,9 +261,9 @@ app.get('/user', function (req, res) {
 
 app.post('/user', function (req, res) {
     console.log(req.session.user);
-    User.findOne({Username: req.session.user.username}).exec(function (error, user) {
-        console.log(user);
-        user.Username = req.body.Username;
+    User.findOne({Username: req.session.user.Username}).exec(function (error, user) {
+        console.log(req.body);
+        user.Username = req.body.username;
         user.Password = bcrypt.hashSync(req.body.Password);
         user.Age = req.body.Age;
         user.Email = req.body.Email;
