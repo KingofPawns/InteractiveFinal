@@ -152,8 +152,8 @@ app.get('/register', function (req, res) {
 app.post('/register', function (req, res) {
     //console.log(req.body);
     User.find().count(function (err, UserCount) {
-        console.log("UserCount")
-        console.log(UserCount);
+        // console.log("UserCount")
+        // console.log(UserCount);
         if (typeof UserCount !== 'number') {
             UserCount = 0;
         }
