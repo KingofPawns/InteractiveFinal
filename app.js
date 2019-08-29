@@ -179,7 +179,9 @@ app.post('/register', function (req, res) {
             });
             question.save();
             user.save();
-            renderIndex(req, res);
+            User.find(function (err, users) {
+                renderIndex(req, res);
+            });
         });
     });
 
@@ -260,12 +262,12 @@ app.get('/user', function (req, res) {
 });
 
 app.post('/user', function (req, res) {
-    User.findOne({Username: req.session.user.Username}).exec(function (error, user) {
+    User.findOne({ Username: req.session.user.Username }).exec(function (error, user) {
         user.Username = req.body.username;
         user.Password = bcrypt.hashSync(req.body.password);
         user.Age = req.body.age;
         user.Email = req.body.email;
-        User.findOneAndUpdate({Username: req.session.user.Username}, user, function (error, doc){
+        User.findOneAndUpdate({ Username: req.session.user.Username }, user, function (error, doc) {
 
         });
         req.session.user = user;
@@ -275,13 +277,13 @@ app.post('/user', function (req, res) {
             questions.question2 = req.body.archetypes;
             questions.question3 = req.body.number;
 
-            Question.findOneAndUpdate({ AnswerId: req.session.user.QuestionAnswerId }, questions, function (error, doc){
+            Question.findOneAndUpdate({ AnswerId: req.session.user.QuestionAnswerId }, questions, function (error, doc) {
 
             });
 
             renderIndex(req, res);
         })
-    })  
+    })
 });
 
 app.get('/admin', function (req, res) {
@@ -289,22 +291,26 @@ app.get('/admin', function (req, res) {
 })
 
 app.get('/suspend/:username', function (req, res) {
-    User.findOne({Username: req.params.username}).exec(function (error, user) {
+    User.findOne({ Username: req.params.username }).exec(function (error, user) {
         user.IsActive = false;
-        User.findOneAndUpdate({Username: req.params.username}, user, function (error, doc){
+        User.findOneAndUpdate({ Username: req.params.username }, user, function (error, doc) {
 
         });
-    UserList(res, req);
+        User.find(function (err, users) {
+            UserList(res, req);
+        });
     });
 })
 
 app.get('/activate/:username', function (req, res) {
-    User.findOne({Username: req.params.username}).exec(function (error, user) {
+    User.findOne({ Username: req.params.username }).exec(function (error, user) {
         user.IsActive = true;
-        User.findOneAndUpdate({Username: req.params.username}, user, function (error, doc){
+        User.findOneAndUpdate({ Username: req.params.username }, user, function (error, doc) {
 
         });
-    UserList(res, req);
+        User.find(function (err, users) {
+            UserList(res, req);
+        });
     });
 })
 
