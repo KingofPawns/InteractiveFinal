@@ -179,6 +179,9 @@ app.post('/register', function (req, res) {
             });
             question.save();
             user.save();
+
+            req.session.user = user;
+            req.session.user.Password = req.body.password;
             User.find(function (err, users) {
                 renderIndex(req, res);
             });
@@ -263,6 +266,7 @@ app.get('/user', function (req, res) {
 
 app.post('/user', function (req, res) {
     User.findOne({ Username: req.session.user.Username }).exec(function (error, user) {
+        var pass = req.body.password;
         user.Username = req.body.username;
         user.Password = bcrypt.hashSync(req.body.password);
         user.Age = req.body.age;
@@ -280,8 +284,11 @@ app.post('/user', function (req, res) {
             Question.findOneAndUpdate({ AnswerId: req.session.user.QuestionAnswerId }, questions, function (error, doc) {
 
             });
+            User.find(function (err, users) {
+                req.session.user.Password = pass;
+                renderIndex(req, res);
 
-            renderIndex(req, res);
+            });
         })
     })
 });
